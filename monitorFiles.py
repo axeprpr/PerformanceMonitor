@@ -30,9 +30,14 @@ for fileN in fileList:
 			path = ""
 			for paths in range(len(fileD) - 1):
 				path = path + "/" + fileD[paths].strip()
+			if path.strip() == "":
+				path = "/"
 			directoryName = fileD[-1]
-			fileStats,_,_,_ = Library.commandExecute("ls -lart " + path + " | grep " + directoryName)
-			fileStats = fileStats.split(" ")
+			print "PATH " + path
+			print "directoryName" + directoryName
+			fileStats,_,_,_ = Library.commandExecute("ls -lart " + path + " | grep " + directoryName + "$")
+			print "COMMAND " + "ls -lart " + path + " | grep " + directoryName + "$"
+			fileStats = fileStats.replace("  ", " ").split(" ")
 
 		permission = int(str(getPermission(fileStats[0][1:4])) + str(getPermission(fileStats[0][4:7])) + str(getPermission(fileStats[0][7:10])))
 		if fileStats[0][0] == 'd':
