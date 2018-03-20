@@ -1,4 +1,5 @@
 import Library
+import datetime
 
 def getDiskPerformance():
         readData = 0.00
@@ -37,6 +38,8 @@ def getDiskUsage():
 a = getDiskUsage()
 b = getDiskPerformance()
 
+
+
 diskStats = {
 		"totalUsed" : a[1],
 	        "totalAvailable" : a[2],
@@ -44,4 +47,6 @@ diskStats = {
 		"writeRate" : round(b[1],2)
 
 	    }
+
+
 print diskStats

@@ -1,4 +1,6 @@
 import Library
+import datetime
+
 
 def getPhysicalMemoryInfo():
         totalMemory,_,_,_=Library.commandExecute("free -b | grep Mem | awk '{print $2}'")
@@ -24,7 +26,8 @@ memoryStats = {
 		"availableMemoryPhy" : a[3],
 		"usedMemorySwp" : b[1],
 		"freeMemorySwp" : b[2],
-
 	      }
+
+
 
 print memoryStats

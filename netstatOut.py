@@ -24,6 +24,6 @@ for netStat in netstatOutputList:
 		   }	
 	netstatData.append(netstats)
 
-Library.printDict(netstatData)
+print netstatData
 	
 

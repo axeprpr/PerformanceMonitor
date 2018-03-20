@@ -1,4 +1,14 @@
 import Library
+import pymongo
+from pymongo import MongoClient
+import json
+import datetime
+
+client = MongoClient("192.168.10.111", 27017 )
+db = client["PerformanceMonitor"]
+collection = db["processMonitor"]
+
+
 
 processNameData,_,_,_ = Library.commandExecute("cat monitorProcessList.txt")
 processNameList = processNameData.splitlines()
@@ -21,14 +31,17 @@ for processName in processNameList:
 			"vsz" : pidStats[2],
 			"rss" : pidStats[3],
 			"percentageMEM" : pidStats[4],
-			"timeStamp" : pidStats[5],
 			"totalBytesRead" : pidStats[6],
 			"totalBytesWritten" : pidStats[7],
 			"kbReadPerSec" : pidStats[8],
 			"kbWrittenPerSec" : pidStats[9],
+			"timestamp" : int(datetime.datetime.now().strftime('%s')),
+			"name" : processName,
 			       }
+		collection.insert(processStats)
+                del processStats["_id"]
+		del processStats["timestamp"]
 		processNameData.append(processStats)
 		counter = counter + 1
 	allProcessData.append({processName : processNameData})
-
-Library.printDict(allProcessData)
+print allProcessData

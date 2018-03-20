@@ -24,12 +24,12 @@ b = getUpTime()
 
 systemInfo = {
 
-	"osName" : a[0],
-	"hostName" : a[1],
-	"osVersion" : a[2],
-	"kernelVersion" : a[3],
-	"upSinceDate" : b[1],
-	"upSinceTime" : b[2]
+	"osName" : a[0].strip(),
+	"hostName" : a[1].strip(),
+	"osVersion" : a[2].strip(),
+	"kernelVersion" : a[3].strip(),
+	"upSinceDate" : b[1].strip(),
+	"upSinceTime" : b[2].strip()
 	     }
 
 print systemInfo

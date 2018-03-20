@@ -2,7 +2,7 @@ import Library
 import re
 
 
-topOutput,_,_,_ = Library.commandExecute("top -b -n 1")
+topOutput,_,_,_ = Library.commandExecute("top -b -n 3")
 topOutput = topOutput.split("  PID USER      PR  NI    VIRT    RES    SHR S  %CPU %MEM     TIME+ COMMAND")
 topOutput = topOutput[-1]
 topOutputList = topOutput.splitlines()
@@ -28,4 +28,4 @@ for processes in topOutputList:
 	      }	
 	topStats.append(processStat)
 
-Library.printDict(topStats)
+print topStats

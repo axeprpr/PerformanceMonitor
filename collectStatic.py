@@ -7,7 +7,6 @@ client = MongoClient("192.168.10.111", 27017 )
 db = client["PerformanceMonitor"]
 
 
-
 cpuStatics,_,_,_ = Library.commandExecute("python cpuStatsStatic.py")
 print cpuStatics.strip()
 cpuStatics = json.loads(cpuStatics.replace('\'', '\"'))

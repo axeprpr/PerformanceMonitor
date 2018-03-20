@@ -26,5 +26,5 @@ for disks in dfOutputList:
 
 
 
-Library.printDict(dfStats)
+print dfStats
 

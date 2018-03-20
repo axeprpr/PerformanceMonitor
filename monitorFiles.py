@@ -1,4 +1,13 @@
 import Library
+import pymongo
+from pymongo import MongoClient
+import json
+import datetime
+
+client = MongoClient("192.168.10.111", 27017 )
+db = client["PerformanceMonitor"]
+collection = db["fileMonitor"]
+
 
 processNameData,_,_,_ = Library.commandExecute("cat monitorFilesList.txt")
 fileList = processNameData.splitlines()
@@ -33,27 +42,35 @@ for fileN in fileList:
 			if path.strip() == "":
 				path = "/"
 			directoryName = fileD[-1]
-			print "PATH " + path
-			print "directoryName" + directoryName
 			fileStats,_,_,_ = Library.commandExecute("ls -lart " + path + " | grep " + directoryName + "$")
-			print "COMMAND " + "ls -lart " + path + " | grep " + directoryName + "$"
 			fileStats = fileStats.replace("  ", " ").split(" ")
 
 		permission = int(str(getPermission(fileStats[0][1:4])) + str(getPermission(fileStats[0][4:7])) + str(getPermission(fileStats[0][7:10])))
 		if fileStats[0][0] == 'd':
-			isDirectory = True
+			isDirectory = "True"
 		else:
-			isDirectory = False	
+			isDirectory = "False"	
+		if fileStats[4].strip() == "":
+			filesize = fileStats[5]
+			lastModified = fileStats[6] + " " + fileStats[7] + " " + fileStats[8]
+		else:
+			filesize = fileStats[4]
+			lastModified = fileStats[5] + " " + fileStats[6] + " " + fileStats[7]
+		 
 		fileStat = {
 			"owner" : fileStats[2] ,
 			"ownerGroup" : fileStats[3],
-			"fileSize" : fileStats[4],
-			"lastModified" : fileStats[5] + " " + fileStats[6] + " " + fileStats[7],
+			"fileSize" : filesize,
+			"lastModified" : lastModified,
 			"permission" : fileStats[0],
 			"chmod" : permission,	
 			"isDirectory" : isDirectory,
+			"name" : fileN,
+			"timestamp" : int(datetime.datetime.now().strftime('%s')),
 			   }
-		allFilesData.append({fileN : fileStat })
+		collection.insert(fileStat)
+		del fileStat["_id"]
+		allFilesData.append(fileStat)
 
+print  allFilesData 
 
-Library.printDict(allFilesData)

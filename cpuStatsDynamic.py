@@ -1,6 +1,6 @@
 import Library
 import re
-
+import datetime
 
 cpuStaticInfo,_,_,_ = Library.commandExecute("lscpu")
 
@@ -43,7 +43,7 @@ averageLoad = {
 		"averageLoad15min" : average3
 	      }
 
-cpuDynamicData = {
+cpuDynamicData = {	
 			"allCpuData" : {
 						"cpuPercentUser" : cpuPercentUserAll,
 						"cpuPercentKernel":cpuPercentKernelAll,
@@ -52,5 +52,6 @@ cpuDynamicData = {
 			"perCpuData" : perCpuStats,
 			"averageLoad" : averageLoad
 		 }
+
 
 print cpuDynamicData

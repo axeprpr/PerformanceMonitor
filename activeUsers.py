@@ -19,4 +19,4 @@ for who in whoOutputList:
 		  }
 	activeUsers.append(whoStat)
 
-Library.printDict(activeUsers)
+print activeUsers
